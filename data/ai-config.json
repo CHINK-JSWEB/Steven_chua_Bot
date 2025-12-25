@@ -8,9 +8,9 @@
   },
   "active_ai": "GPT5",
   "GPT": false,
-  "GEMINI": true,
+  "GEMINI": false,
   "LLAMA": false,
   "DEEPSEEK": false,
   "BRAVE": false,
-  "on": true
+  "on": false
 }

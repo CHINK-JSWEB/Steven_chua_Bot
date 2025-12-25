@@ -7,6 +7,7 @@ const login = require("ws3-fca");
 const os = require("os");
 const { execSync, spawn } = require("child_process");
 const axios = require("axios");
+const sleep = require("./cmds/sleep.js");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -200,7 +201,15 @@ Enjoy your chat while sipping NESCAFE! ☕✨
         try {
           if (err) return console.error("❌ Listener error:", err);
           if (!event || event.senderID === botUID) return;
-
+// MASTER SLEEP SWITCH
+if (sleep.isSleeping()) {
+  const msgLower = (event.body || "").toLowerCase();
+  if (msgLower.startsWith("sleep off")) {
+    return sleep.execute({ api, event, args: msgLower.split(" ").slice(1) });
+  }
+  // Ignore lahat ng commands at auto responses
+  return;
+}
           if (event.type !== "message_unsend") {
             const mid = event.messageID || `${event.timestamp}-${event.threadID}`;
             if (global.processedMessages.has(mid)) return;
